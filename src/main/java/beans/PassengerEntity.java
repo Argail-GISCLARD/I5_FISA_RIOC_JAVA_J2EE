@@ -1,5 +1,4 @@
 package beans;
-
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,25 +11,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "planes")
+@Table(name = "passengers")
 @Getter
 @Setter
 @NoArgsConstructor
-public class AvionEntity extends PanacheEntityBase {
+public class PassengerEntity extends PanacheEntityBase {
     @Id
-    @SequenceGenerator(name = "avionSequence", sequenceName = "planes_sequence", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(generator = "avionSequence")
+    @SequenceGenerator(name = "passengerSequence", sequenceName = "passengers_sequence", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(generator = "passengerSequence")
     public Long id;
 
     @Column(nullable = false)
-    public String operator;
+    public String surname;
 
     @Column(nullable = false)
-    public String model;
+    public String firstname;
 
-    @Column(unique = true, nullable = false)
-    public String registration;
-
-    @Column(nullable = false)
-    public Integer capacity;
+    @Column(nullable = false, unique = true)
+    public String email_address;
 }

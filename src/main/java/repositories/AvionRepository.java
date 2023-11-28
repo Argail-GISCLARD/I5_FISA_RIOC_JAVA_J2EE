@@ -1,22 +1,30 @@
 package repositories;
 
 import java.util.List;
-
 import beans.AvionEntity;
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 
-public class AvionRepository implements PanacheRepositoryBase<AvionEntity,Integer>{
-    ● Ajouter un avion
-    public List<AvionEntity> listAll() {
-        List<AvionEntity> avions = AvionEntity.listAll();
+@ApplicationScoped
+public class AvionRepository implements PanacheRepository<AvionEntity>{
+
+    public List<AvionEntity> getAll() {
+        return listAll();
     }
 
-    public AvionEntity findByIdAvionEntity(Integer id){
-        AvionEntity avionEntity = new AvionEntity();
-        return AvionEntity.findById(id);
+    public List<AvionEntity> getByOperator(String operator){
+        return list("operator",operator);
     }
 
-    public void addAvionEntity(){
-        AvionEntity.update(null, null)
+    public AvionEntity getById(Long id){
+        return findById(id);
+    }
+
+    public void delete(Long id){
+        delete("id",id);
+    }
+
+    public void add(AvionEntity avionEntity){
+        persist(avionEntity);
     }
 }
