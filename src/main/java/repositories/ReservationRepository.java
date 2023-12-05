@@ -32,24 +32,23 @@ public class ReservationRepository implements PanacheRepository<ReservationEntit
 
         AvionEntity avionEntity = AvionEntity.findById(flightEntity.plane_id);
 
-        if(isReservationFeasible(avionEntity.id)){
+        if(isReservationFeasible(avionEntity.id, flight_id)){
             ReservationEntity reservationEntity = new ReservationEntity();
             reservationEntity.flight_id = flight_id;
             reservationEntity.passenger_id = passenger_id;
             persist(reservationEntity);
-            avionEntity.capacity = avionEntity.capacity-1;
         }
     }
 
-    private boolean isReservationFeasible(Long plane_id){
+    private boolean isReservationFeasible(Long plane_id, Long flight_id){
+        List<ReservationEntity> reservationEntities = list("flight_id",flight_id);
         AvionEntity avionEntity = AvionEntity.findById(plane_id);
-
-        if(avionEntity.capacity == 0){
-            return false;
+        if(reservationEntities.size() < avionEntity.capacity){
+            return true;
         }
         else
         {
-            return true;
+            return false;
         }
     }
 }
